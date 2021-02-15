@@ -23,10 +23,10 @@ Treap with implicit key is a structure that that implements a dynamic array. Fol
 * Insert(i, x) - insert the element x in dynamic array at index i
 * Remove(i) - remove the element with index i from dynamic array
 * operator\[\](i) - get the element at the i-th position
-* InsertSubArray(i, arr) - insert the array at position i
-* CutSubarray(i, s) - cut subarray that begins from i'th element and has the size s from array
+* InsertSubArray(i, arr) - insert the dynamic array arr at position i
+* CutSubarray(i, s) - cut subarray that begins from i'th element and has the size s
 
 This implementation supports move-semantics, so it is possible to insert subarray without its copying.
 
 ### Complexity
-All of the enumerated operations have O(log(n)) time complexity and O(n) space complexity.
+All of the enumerated operations have O(log(n)) randomized time complexity. Space complexity is O(n).
