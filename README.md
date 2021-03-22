@@ -30,3 +30,6 @@ This implementation supports move-semantics, so it is possible to insert subarra
 
 ### Complexity
 All of the enumerated operations have O(log(n)) randomized time complexity. Space complexity is O(n).
+
+## Heap with custom swapper
+#### custom_heap.h
