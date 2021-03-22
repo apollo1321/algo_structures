@@ -5,6 +5,7 @@ class DisjointSetUnion {
 public:
     static constexpr size_t kNoLabel = std::numeric_limits<size_t>::max();
 
+public:
     explicit DisjointSetUnion(size_t element_count)
         : parent_(element_count, kNoParent),
           rank_(element_count),
@@ -42,12 +43,9 @@ public:
     }
 
 private:
-    std::vector<size_t> parent_;
-    std::vector<size_t> rank_;
-    std::vector<size_t> labels_;
-
     static constexpr size_t kNoParent = std::numeric_limits<size_t>::max();
 
+private:
     size_t FindRoot(size_t element) {
         size_t root = element;
         while (parent_[root] != kNoParent) {
@@ -64,4 +62,9 @@ private:
             from = next;
         }
     }
+
+private:
+    std::vector<size_t> parent_;
+    std::vector<size_t> rank_;
+    std::vector<size_t> labels_;
 };
