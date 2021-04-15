@@ -50,15 +50,17 @@ void SiftDown(RandIt begin, RandIt end, RandIt iter, Comparator comp = Comparato
               Swapper swap = Swapper()) {
     while ((HasLeftChild(begin, end, iter) && comp(*iter, *GetLeftChild(begin, iter))) ||
            (HasRightChild(begin, end, iter) && comp(*iter, *GetRightChild(begin, iter)))) {
-        if (!HasRightChild(begin, end, iter)) {
-            swap(*iter, *GetLeftChild(begin, iter));
-            break;
-        } else if (comp(*GetRightChild(begin, iter), *GetLeftChild(begin, iter))) {
-            swap(*iter, *GetLeftChild(begin, iter));
-            iter = GetLeftChild(begin, iter);
+        
+        if (!HasRightChild(begin, end, iter) ||
+            comp(*GetRightChild(begin, iter), *GetLeftChild(begin, iter))) {
+            
+            auto left_child = GetLeftChild(begin, iter);
+            swap(*iter, *left_child);
+            iter = left_child;
         } else {
-            swap(*iter, *GetRightChild(begin, iter));
-            iter = GetRightChild(begin, iter);
+            auto right_child = GetRightChild(begin, iter);
+            swap(*iter, *right_child);
+            iter = right_child;
         }
     }
 }
