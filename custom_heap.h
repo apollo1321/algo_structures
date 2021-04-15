@@ -10,20 +10,20 @@ struct Swapper {
 
 template <typename RandIt>
 RandIt GetLeftChild(RandIt begin, RandIt iter) {
-    auto dist = std::distance(begin, iter);
-    return std::next(begin, 2 * dist + 1);
+    auto distance = std::distance(begin, iter);
+    return std::next(begin, 2 * distance + 1);
 }
 
 template <typename RandIt>
 RandIt GetRightChild(RandIt begin, RandIt iter) {
-    auto dist = std::distance(begin, iter);
-    return std::next(begin, 2 * dist + 2);
+    auto distance = std::distance(begin, iter);
+    return std::next(begin, 2 * distance + 2);
 }
 
 template <typename RandIt>
 RandIt GetParent(RandIt begin, RandIt iter) {
-    auto dist = std::distance(begin, iter);
-    return std::next(begin, (dist + 1) / 2 - 1);
+    auto distance = std::distance(begin, iter);
+    return std::next(begin, (distance + 1) / 2 - 1);
 }
 
 template <typename RandIt>
@@ -80,3 +80,13 @@ template <class RandIt, class Comparator = std::less<>, class Swapper = Swapper>
 void PushHeap(RandIt begin, RandIt end, Comparator comp = Comparator(), Swapper swap = Swapper()) {
     SiftUp(begin, std::prev(end), comp, swap);
 }
+
+template <class RandIt, class Comparator = std::less<>, class Swapper = Swapper>
+void MakeHeap(RandIt begin, RandIt end, Comparator comp = Comparator(), Swapper swap = Swapper()) {
+    auto iter = begin + std::distance(begin, end) / 2;
+    while (iter != begin) {
+        SiftDown(begin, end, iter - 1, comp, swap);
+        --iter;
+    }
+}
+
