@@ -85,7 +85,7 @@ template <class RandIt, class Comparator = std::less<>, class Swapper = Swapper>
 void MakeHeap(RandIt begin, RandIt end, Comparator comp = Comparator(), Swapper swap = Swapper()) {
     auto iter = begin + std::distance(begin, end) / 2;
     while (iter != begin) {
-        SiftDown(begin, end, iter - 1, comp, swap);
+        SiftDown(begin, end, std::prev(iter), comp, swap);
         --iter;
     }
 }
