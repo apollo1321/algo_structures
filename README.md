@@ -33,3 +33,7 @@ All of the enumerated operations have O(log(n)) randomized time complexity. Spac
 
 ## Heap with custom swapper
 #### custom_heap.h
+
+## Counting sort
+#### counting_sort.h
+I didn't see a convenient implementation of counting sorting for arbitrary objects, so I wrote my own. My implementation differs in that the algorithm does not know which objects it will work with. It only needs to provide one function that converts the object to an unsigned value. The algorithm has been wrapped in a class for a more efficient implementation: it is often necessary to do a lot of counting sorts, frequent allocation and freeing of memory will slow it down.
