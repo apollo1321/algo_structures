@@ -19,6 +19,7 @@ Two heuristics were used in the implementation: path compression and rank heuris
 
 ## Treap with implicit key
 #### implicit_key_treap.h
+
 Treap with implicit key is a structure that that implements a dynamic array. Following operations are provided:
 * Insert(i, x) - insert the element x in dynamic array at index i
 * Remove(i) - remove the element with index i from dynamic array
@@ -36,4 +37,8 @@ All of the enumerated operations have O(log(n)) randomized time complexity. Spac
 
 ## Counting sort
 #### counting_sort.h
-I didn't see a convenient implementation of counting sorting for arbitrary objects, so I wrote my own. My implementation differs in that the algorithm does not know which objects it will work with. It only needs to provide one function that converts the object to an unsigned value. The algorithm has been wrapped in a class for a more efficient implementation: it is often necessary to do a lot of counting sorts, frequent allocation and freeing of memory will slow it down.
+
+Implementation of the counting sorting algorithm for objects of any type in the STL style. The algorithm does not make any assumptions about the objects being sorted, instead the user must provide it with a function that converts the object to an unsigned number.
+
+### Complexity
+Time and space complexity is O(n + k), where n = std::distance(begin, end), k is the maximum value of the converted element.
