@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <vector>
 
 class CountingSort {
@@ -19,7 +20,7 @@ public:
             counts_[index] += counts_[index - 1];
         }
 
-        sorted_indexes_.resize((std::distance(begin, end)));
+        sorted_indexes_.resize(std::distance(begin, end));
 
         for (size_t index = 0; index < sorted_indexes_.size(); ++index) {
             auto counts_index = to_unsigned(begin[index]);
