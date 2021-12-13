@@ -3,6 +3,7 @@
  * - The numbers in range [begin, end) are partitioned with respect to
  *   predicate, i.e., all numbers for which the predicate is false must precede
  *   all number for which the predicate is true.
+ * - end - begin <= std::numeric_limits<Integral>::max()
  *
  * Returns:
  * - The first number in the range [begin, end) for which the predicate returns

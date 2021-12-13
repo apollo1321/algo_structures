@@ -1,3 +1,13 @@
+## Binary search
+
+#### `binary_search.h`
+
+Template implementation of binary search for integer types.
+
+### Complexity
+
+Time complexity is `O(log(n))`, where `n = end - begin`.
+
 ## Counting sort
 
 #### `counting_sort.h`
@@ -15,8 +25,22 @@ converted element.
 
 #### `extended_gcd.h`
 
-Computes gcd of integers and the coefficients of Bezout's identity.
+* `ExtendedGcd(a, b)` - computes gcd of integers and the coefficients of Bezout's identity,
+  i.e. `a * a_q + b * b_q = gcd(a, b)`
+* `ComputeInverse(a, m)` - computes the multiplicative inverse of the value, i.e. `a * inv == 1 (mod m)`.
 
 ### Complexity
 
 Time complexity is `O(log(b))`, where `b` is the smaller number.
+
+## Number of inversions
+
+#### `iversion_number.h`
+
+* `MergeSortWithInversions` - sorts elements in range `[first, last)` and computes the number of inversions in range,
+  i.e. the number of pairs `(i, j)` such that `i < j, *(first + i) > *(first + j)` (
+  or `i < j, compare(*(first + j), *(first + i)) == true`). Sort is stable.
+
+### Complexity
+
+Time complexity is `O(n * log(n))`, where `n = distance(first, last)`. Space complexity is `O(n)`.
