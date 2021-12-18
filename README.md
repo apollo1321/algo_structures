@@ -1,4 +1,4 @@
-# Useful Algorithms and Data Structures
+# Algorithms and Data Structures
 
 The repository contains stl-style implementations of algorithms and data structures.
 
