@@ -44,3 +44,17 @@ Time complexity is `O(log(b))`, where `b` is the smaller number.
 ### Complexity
 
 Time complexity is `O(n * log(n))`, where `n = distance(first, last)`. Space complexity is `O(n)`.
+
+## Factorization
+
+#### `factorization.h`
+
+* `Factorize(n, callback)` - Finds all prime divisors of a number in non-decreasing order and passes each of them to
+  callback.
+* `FactorizeInVector(n)` - Finds all prime divisors of a number and returns them as a `vector` of
+  pairs `(prime divisor, count)` in increasing order
+* `FactorizeInMap(n)` - Finds all prime divisors of a number and returns them as a `map: prime divisor -> count`
+
+### Complexity
+
+Time complexity is `O(sqrt(n))`.
