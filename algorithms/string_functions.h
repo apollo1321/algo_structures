@@ -1,8 +1,9 @@
 #include <string_view>
 #include <vector>
 
-std::vector<size_t> ComputePrefixFunction(std::string_view string) {
-  std::vector<size_t> border_sizes(string.size());
+template <class Container>
+std::vector<size_t> ComputePrefixFunction(const Container& string) {
+  std::vector<size_t> border_sizes(std::size(string));
   border_sizes[0] = 0;
   for (size_t index = 1; index < border_sizes.size(); ++index) {
     size_t border_size = border_sizes[index - 1];
@@ -14,11 +15,12 @@ std::vector<size_t> ComputePrefixFunction(std::string_view string) {
   return border_sizes;
 }
 
-std::vector<size_t> ComputeZFunction(std::string_view string) {
-  if (string.empty()) {
+template <class Container>
+std::vector<size_t> ComputeZFunction(const Container& string) {
+  if (std::size(string) == 0) {
     return {};
   }
-  std::vector<size_t> result(string.size());
+  std::vector<size_t> result(std::size(string));
   size_t max_index = 0;
   for (size_t z_index = 1; z_index < result.size(); ++z_index) {
     size_t offset = z_index - max_index;
