@@ -25,7 +25,7 @@ Treap with implicit key is a structure that that implements a dynamic array. Fol
 
 * `Insert(i, x)` - insert the element `x` in dynamic array at index `i`
 * `Remove(i)` - remove the element with index `i` from dynamic array
-* `operator\[\](i)` - get the element at the `i'th` position
+* `operator[](i)` - get the element at the `i'th` position
 * `InsertSubArray(i, arr)` - insert the dynamic array arr at position `i`
 * `CutSubarray(i, s)` - cut subarray that begins from `i'th` element and has the size `s`
 
@@ -34,6 +34,25 @@ This implementation supports move-semantics, so it is possible to insert subarra
 ### Complexity
 
 All the enumerated operations have `O(log(n))` randomized time complexity. Space complexity is `O(n)`.
+
+## Binary indexed tree (Fenwick tree)
+
+#### `binary_indexed_tree.h`
+
+Fenwick tree is a data structure that allows efficiently calculate prefix sums and update elements of array
+in `O(log n)`. Unlike the segment tree, the Fenwick tree is easier to implement, and it is more efficient in memory and
+time by a constant factor. Also, the Fenwick tree can be extended to update and query subarrays of multidimensional
+arrays.
+
+Fenwick tree is implemented for `1D`, `2D`, `3D` cases. The API uses half-intervals. I.e., requests for the sum should
+be formed in the form of half-intervals `[from, to)`.
+
+### Complexity
+
+|       | 1D             | 2D                             | 3D                                            |
+|-------|----------------|--------------------------------|-----------------------------------------------|
+| space | `O(size)`      | `O(x_size * y_size)`           |  `O(x_size * y_size * z_size)`                |
+| time  | `O(log(size))` | `O(log(x_size) * log(y_size))` |  `O(log(x_size) * log(y_size) * log(z_size))` |
 
 ## Heap with custom swapper
 
