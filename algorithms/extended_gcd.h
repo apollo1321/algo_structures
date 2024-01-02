@@ -9,7 +9,11 @@ struct Gcd {
 /*
  * Computes gcd of integers a and b and the coefficients of
  * Bezout's identity:
- * a * a_quotient + b * b_quotient = gcd
+ * a * a_quotient + b * b_quotient = gcd(a, b)
+ *
+ * All pairs of solution can be represented in the following form:
+ * (a_quotient - k * b / gcd(a, b), y + k * a / gcd(a,b)),
+ * where k is arbitrary integer.
  */
 Gcd ExtendedGcd(int64_t a, int64_t b) {
   /*
