@@ -3,16 +3,19 @@
 template <class T, size_t Dimensions>
 class BinaryIndexedTree {};
 
-inline size_t GetSumStartIndex(size_t index) {
-  return index & (index + 1);
-}
+struct BinaryIndexedTreeBase {
+  static size_t GetSumStartIndex(size_t index) {
+    return index & (index + 1);
+  }
 
-inline size_t GetNextAddIndex(size_t index) {
-  return index | (index + 1);
-}
+  static size_t GetNextAddIndex(size_t index) {
+    return index | (index + 1);
+  }
+};
+
 
 template <class T>
-class BinaryIndexedTree<T, 1> {
+class BinaryIndexedTree<T, 1> : private BinaryIndexedTreeBase {
  public:
   explicit BinaryIndexedTree(size_t size) : tree_(size) {
   }
@@ -51,7 +54,7 @@ class BinaryIndexedTree<T, 1> {
 };
 
 template <class T>
-class BinaryIndexedTree<T, 2> {
+class BinaryIndexedTree<T, 2> : private BinaryIndexedTreeBase {
  public:
   BinaryIndexedTree(size_t x_size, size_t y_size)
       : tree_(x_size * y_size), x_size_{x_size}, y_size_{y_size} {
@@ -90,17 +93,14 @@ class BinaryIndexedTree<T, 2> {
 
  private:
   std::vector<T> tree_;
-  const size_t x_size_, y_size_;
+  size_t x_size_, y_size_;
 };
 
 template <class T>
-class BinaryIndexedTree<T, 3> {
+class BinaryIndexedTree<T, 3> : private BinaryIndexedTreeBase {
  public:
   BinaryIndexedTree(size_t x_size, size_t y_size, size_t z_size)
-      : tree_(x_size * y_size * z_size),
-        x_size_{x_size},
-        y_size_{y_size},
-        z_size_{z_size} {
+      : tree_(x_size * y_size * z_size), x_size_{x_size}, y_size_{y_size}, z_size_{z_size} {
   }
 
   T GetSum(size_t x_index, size_t y_index, size_t z_index) const {
@@ -144,5 +144,5 @@ class BinaryIndexedTree<T, 3> {
 
  private:
   std::vector<T> tree_;
-  const size_t x_size_, y_size_, z_size_;
+  size_t x_size_, y_size_, z_size_;
 };
