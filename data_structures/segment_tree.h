@@ -1,31 +1,43 @@
 #include <functional>
+#include <numeric>
 #include <vector>
 
+template <class T>
 struct Min {
-  template <class T>
+  static constexpr T kNeutral = std::numeric_limits<T>::max();
+
   T operator()(const T& left, const T& right) const {
     return std::min(left, right);
   }
 };
 
+template <class T>
 struct Max {
-  template <class T>
+  static constexpr T kNeutral = std::numeric_limits<T>::min();
+
   T operator()(const T& left, const T& right) const {
     return std::max(left, right);
   }
 };
 
-template <class T, class Combiner = std::plus<>>
+template <class T>
+struct Plus {
+  static constexpr T kNeutral = 0;
+
+  T operator()(const T& left, const T& right) const {
+    return std::plus(left, right);
+  }
+};
+
+template <class T, class Combiner = Plus<T>>
 class SegmentTree {
  public:
-  explicit SegmentTree(size_t size, const T& initial = T{},
-                       Combiner combiner = Combiner{})
-      : tree_(2 * size), initial_(initial), combiner_(combiner) {
+  explicit SegmentTree(size_t size, Combiner combiner = Combiner{})
+      : tree_(2 * size), combiner_(combiner) {
   }
 
-  explicit SegmentTree(const std::vector<T>& data, const T& initial = T{},
-                       Combiner combiner = Combiner{})
-      : tree_(data.size()), initial_(initial), combiner_(combiner) {
+  explicit SegmentTree(const std::vector<T>& data, Combiner combiner = Combiner{})
+      : tree_(data.size()), combiner_(combiner) {
     tree_.reserve(data.size() * 2);
     tree_.insert(tree_.end(), data.begin(), data.end());
     for (size_t index = data.size() - 1; index > 0; --index) {
@@ -34,10 +46,12 @@ class SegmentTree {
   }
 
   T Query(size_t from, size_t to) const {
-    T left_res{initial_};
-    T right_res{initial_};
+    T left_res{Combiner::kNeutral};
+    T right_res{Combiner::kNeutral};
+
     from += tree_.size() >> 1;
     to += tree_.size() >> 1;
+
     for (; from < to; from >>= 1, to >>= 1) {
       if (from & 1) {
         left_res = combiner_(left_res, tree_[from++]);
@@ -46,6 +60,7 @@ class SegmentTree {
         right_res = combiner_(tree_[--to], right_res);
       }
     }
+
     return combiner_(left_res, right_res);
   }
 
@@ -57,8 +72,11 @@ class SegmentTree {
     }
   }
 
+  T Get(size_t index) const {
+    return tree_[index + (tree_.size() >> 1)];
+  }
+
  private:
   std::vector<T> tree_;
-  const T initial_;
   Combiner combiner_;
 };
