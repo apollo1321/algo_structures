@@ -4,6 +4,8 @@
 
 template <class T>
 struct Min {
+  using ValueType = T;
+
   static constexpr T kNeutral = std::numeric_limits<T>::max();
 
   T operator()(const T& left, const T& right) const {
@@ -13,6 +15,8 @@ struct Min {
 
 template <class T>
 struct Max {
+  using ValueType = T;
+
   static constexpr T kNeutral = std::numeric_limits<T>::min();
 
   T operator()(const T& left, const T& right) const {
@@ -22,6 +26,8 @@ struct Max {
 
 template <class T>
 struct Plus {
+  using ValueType = T;
+
   static constexpr T kNeutral = 0;
 
   T operator()(const T& left, const T& right) const {
@@ -29,14 +35,18 @@ struct Plus {
   }
 };
 
-template <class T, class Combiner = Plus<T>>
+template <class Combiner = Plus<int64_t>>
 class SegmentTree {
  public:
+  using ValueType = Combiner::ValueType;
+  static constexpr auto kNeutral = Combiner::kNeutral;
+
+ public:
   explicit SegmentTree(size_t size, Combiner combiner = Combiner{})
-      : tree_(2 * size), combiner_(combiner) {
+      : tree_(2 * size, kNeutral), combiner_(combiner) {
   }
 
-  explicit SegmentTree(const std::vector<T>& data, Combiner combiner = Combiner{})
+  explicit SegmentTree(const std::vector<ValueType>& data, Combiner combiner = Combiner{})
       : tree_(data.size()), combiner_(combiner) {
     tree_.reserve(data.size() * 2);
     tree_.insert(tree_.end(), data.begin(), data.end());
@@ -45,9 +55,9 @@ class SegmentTree {
     }
   }
 
-  T Query(size_t from, size_t to) const {
-    T left_res{Combiner::kNeutral};
-    T right_res{Combiner::kNeutral};
+  ValueType Query(size_t from, size_t to) const {
+    ValueType left_res{kNeutral};
+    ValueType right_res{kNeutral};
 
     from += tree_.size() >> 1;
     to += tree_.size() >> 1;
@@ -64,7 +74,7 @@ class SegmentTree {
     return combiner_(left_res, right_res);
   }
 
-  void Modify(size_t index, const T& value) {
+  void Modify(size_t index, const ValueType& value) {
     index += tree_.size() >> 1;
     tree_[index] = value;
     for (; index >>= 1;) {
@@ -72,11 +82,11 @@ class SegmentTree {
     }
   }
 
-  T Get(size_t index) const {
+  ValueType Get(size_t index) const {
     return tree_[index + (tree_.size() >> 1)];
   }
 
  private:
-  std::vector<T> tree_;
+  std::vector<ValueType> tree_;
   Combiner combiner_;
 };
